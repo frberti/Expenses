@@ -1,13 +1,12 @@
-import 'package:expenses/components/adaptative_button.dart';
-import 'package:expenses/components/adaptative_date_picker.dart';
-import 'package:expenses/components/adaptative_text_field.dart';
+import 'package:expenses/components/adaptive_button.dart';
+import 'package:expenses/components/adaptive_date_picker.dart';
+import 'package:expenses/components/adaptive_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
   final void Function(String, double, DateTime) onSubmit;
 
-  TransactionForm(this.onSubmit);
+  const TransactionForm(this.onSubmit, {super.key});
 
   @override
   State<TransactionForm> createState() => _TransactionFormState();
@@ -30,21 +29,6 @@ class _TransactionFormState extends State<TransactionForm> {
     FocusScope.of(context).unfocus();
   }
 
-  _showDatePicker() {
-    showDatePicker(
-      context: context,
-      firstDate: DateTime(2019),
-      lastDate: DateTime.now(),
-    ).then((datePicked) {
-      setState(() {
-        if (datePicked == null) {
-          return;
-        }
-        _selectedDate = datePicked;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -59,18 +43,18 @@ class _TransactionFormState extends State<TransactionForm> {
               bottom: 10 + mediaQuery.viewInsets.bottom),
           child: Column(
             children: [
-              AdaptativeTextField(
+              AdaptiveTextField(
                 controller: _titleController,
                 submitForm: (_) => _submitForm(context),
                 label: 'Título',
               ),
-              AdaptativeTextField(
+              AdaptiveTextField(
                 controller: _valueController,
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 submitForm: (_) => _submitForm(context),
                 label: 'Valor R\$',
               ),
-              AdaptativeDatePicker(
+              AdaptiveDatePicker(
                 selectedDate: _selectedDate,
                 onDateChanged: (newDate) {
                   setState(() {
@@ -81,7 +65,7 @@ class _TransactionFormState extends State<TransactionForm> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  AdaptativeButton(
+                  AdaptiveButton(
                       label: 'Nova transação',
                       onPressed: () => _submitForm(context)),
                 ],
